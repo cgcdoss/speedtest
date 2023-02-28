@@ -1,7 +1,17 @@
 export function setTeste(element: HTMLDivElement): any {
+    let interval: number;
+
     const btn = document.createElement('button');
     btn.textContent = 'Começar';
-    btn.addEventListener('click', testarVelocidade);
+    btn.addEventListener('click', () => {
+        if (btn.textContent?.includes('Começar')) {
+            interval = setInterval(() => testarVelocidade(), 500);
+            btn.textContent = 'Parar';
+        } else {
+            clearInterval(interval);
+            btn.textContent = 'Começar';
+        }
+    });
     element.append(btn);
 
     const status = document.createElement('h2');
@@ -9,9 +19,7 @@ export function setTeste(element: HTMLDivElement): any {
     element.append(status);
 
     function testarVelocidade() {
-        setStatus('Carregando');
-
-        const url = '/video-teste.mp4';
+        const url = '/feature-fast.png';
         const parametroParaEvitarCache = `timestamp=${new Date().getTime()}`;
         const inicio = performance.now();
 
