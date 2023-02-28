@@ -12,7 +12,7 @@ export function setTeste(element: HTMLDivElement): any {
         setStatus('Carregando');
 
         const url = '/video-teste.mp4';
-        const tamanhoArquivo = 100 * 1024 * 1024; // 100 MB em bytes
+        const tamanhoArquivo = 43.5 * 1024 * 1024; // 100 MB em bytes
         const inicio = performance.now();
 
         fetch(url).then(() => {
