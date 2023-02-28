@@ -12,10 +12,10 @@ export function setTeste(element: HTMLDivElement): any {
         setStatus('Carregando');
 
         const url = '/video-teste.mp4';
-        const tamanhoArquivo = 43.5 * 1024 * 1024; // 100 MB em bytes
+        const tamanhoArquivo = 43.5 * 1024 * 1024;
         const inicio = performance.now();
 
-        fetch(url).then(() => {
+        fetch(url, { cache: 'no-cache' }).then(() => {
             const fim = performance.now();
             const tempo = (fim - inicio) / 1000; // tempo em segundos
             const velocidade = tamanhoArquivo / tempo / 1024 / 1024; // velocidade em Mbps
