@@ -5,7 +5,7 @@ export function setTeste(element: HTMLDivElement): any {
     btn.textContent = 'Começar';
     btn.addEventListener('click', () => {
         if (btn.textContent?.includes('Começar')) {
-            interval = setInterval(() => testarVelocidade(), 500);
+            interval = setInterval(() => testarVelocidade(), 1000);
             btn.textContent = 'Parar';
         } else {
             clearInterval(interval);
@@ -19,7 +19,7 @@ export function setTeste(element: HTMLDivElement): any {
     element.append(status);
 
     function testarVelocidade() {
-        const url = 'https://jestjs.io/img/content/feature-fast.png';
+        const url = '/video-teste.mp4';
         const parametroParaEvitarCache = `timestamp=${new Date().getTime()}`;
         const inicio = performance.now();
 
