@@ -1,14 +1,12 @@
 export function setTeste(element: HTMLDivElement): any {
-    let interval: number;
-
     const btn = document.createElement('button');
     btn.textContent = 'Começar';
     btn.addEventListener('click', () => {
         if (btn.textContent?.includes('Começar')) {
-            interval = setInterval(() => testarVelocidade(), 1000);
+            setStatus('Carregando');
+            testarVelocidade()
             btn.textContent = 'Parar';
         } else {
-            clearInterval(interval);
             btn.textContent = 'Começar';
         }
     });
@@ -37,6 +35,11 @@ export function setTeste(element: HTMLDivElement): any {
                 const tempo = (fim - inicio) / 1000; // converte de milissegundos para segundos
                 const velocidade = (buffer.byteLength / tempo / 1000000) * 8; // calcula a velocidade em Mbps
                 setStatus(`Velocidade de download: ${velocidade.toFixed(2)} Mbps`);
+
+                if (btn.textContent?.includes('Parar'))
+                    setTimeout(() => {
+                        testarVelocidade();
+                    }, 500);
             });
     }
 
