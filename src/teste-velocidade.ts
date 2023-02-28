@@ -11,7 +11,7 @@ export function setTeste(element: HTMLDivElement): any {
     function testarVelocidade() {
         setStatus('Carregando');
 
-        const url = '/lorem.txt';
+        const url = '/video-teste.mp4';
         const tamanhoArquivo = 100 * 1024 * 1024; // 100 MB em bytes
         const inicio = performance.now();
 
