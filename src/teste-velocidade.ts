@@ -19,7 +19,7 @@ export function setTeste(element: HTMLDivElement): any {
     element.append(status);
 
     function testarVelocidade() {
-        const url = '/video-teste.mp4';
+        const url = '/feature-fast.png';
         const parametroParaEvitarCache = `timestamp=${new Date().getTime()}`;
         const inicio = performance.now();
 
