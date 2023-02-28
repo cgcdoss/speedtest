@@ -19,7 +19,7 @@ export function setTeste(element: HTMLDivElement): any {
     element.append(status);
 
     function testarVelocidade() {
-        const url = '/feature-fast.png';
+        const url = 'https://raw.githubusercontent.com/jrquick17/ng-speed-test/02c59e4afde67c35a5ba74014b91d44b33c0b3fe/demo/src/assets/5mb.jpg?nnn=0.6578724231971347';
         const parametroParaEvitarCache = `timestamp=${new Date().getTime()}`;
         const inicio = performance.now();
 
