@@ -18,7 +18,7 @@ export function setTeste(element: HTMLDivElement): any {
         fetch(url, { cache: 'no-cache' }).then(() => {
             const fim = performance.now();
             const tempo = (fim - inicio) / 1000; // tempo em segundos
-            const velocidade = tamanhoArquivo / tempo / 1024 / 1024; // velocidade em Mbps
+            const velocidade = tamanhoArquivo / tempo * 8; // velocidade em Mbps
             setStatus(`Velocidade de download: ${velocidade.toFixed(2)} Mbps`);
         });
     }
