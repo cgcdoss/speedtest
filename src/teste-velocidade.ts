@@ -12,9 +12,10 @@ export function setTeste(element: HTMLDivElement): any {
         setStatus('Carregando');
 
         const url = '/video-teste.mp4';
+        const parametroParaEvitarCache = `timestamp=${new Date().getTime()}`;
         const inicio = performance.now();
 
-        fetch(url, { cache: 'no-cache' }).then((response) => {
+        fetch(`${url}?${parametroParaEvitarCache}`, { cache: 'no-store' }).then((response) => {
             const fim = performance.now();
             const tempo = (fim - inicio) / 1000; // converte de milissegundos para segundos
             const velocidade = (+response.headers.get("Content-Length")! / tempo / 1000000) * 8; // calcula a velocidade em Mbps
