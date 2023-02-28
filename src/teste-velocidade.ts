@@ -12,13 +12,12 @@ export function setTeste(element: HTMLDivElement): any {
         setStatus('Carregando');
 
         const url = '/video-teste.mp4';
-        const tamanhoArquivo = 43.5 * 1024 * 1024;
         const inicio = performance.now();
 
-        fetch(url, { cache: 'no-cache' }).then(() => {
+        fetch(url, { cache: 'no-cache' }).then((response) => {
             const fim = performance.now();
-            const tempo = (fim - inicio) / 1000; // tempo em segundos
-            const velocidade = tamanhoArquivo / tempo * 8; // velocidade em Mbps
+            const tempo = (fim - inicio) / 1000; // converte de milissegundos para segundos
+            const velocidade = (+response.headers.get("Content-Length")! / tempo / 1000000) * 8; // calcula a velocidade em Mbps
             setStatus(`Velocidade de download: ${velocidade.toFixed(2)} Mbps`);
         });
     }
