@@ -46,4 +46,6 @@ export function setTeste(element: HTMLDivElement): any {
     function setStatus(status: string) {
         return element.querySelector('.status')!.textContent = status;
     }
+
+    btn.click(); // Para iniciar o site já com o teste sendo executado
 }
