@@ -78,7 +78,8 @@ h2.status {
   width: 0%;
   height: 3px;
   background-color: #646cff;
-  transition: width 650ms ease-in;
+  box-shadow: 0px 0px 8px #646cff;
+  transition: width 700ms ease-in;
 }
 
 @media (prefers-color-scheme: light) {
