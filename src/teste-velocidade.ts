@@ -1,8 +1,12 @@
 export function setTeste(element: HTMLDivElement): any {
+    let amostras: Array<number> = [];
+    const TOTAL_AMOSTRAS = 15;
+
     const btn = document.createElement('button');
     btn.textContent = 'Começar';
     btn.addEventListener('click', () => {
         if (btn.textContent?.includes('Começar')) {
+            amostras = [];
             setStatus('Carregando');
             testarVelocidade()
             btn.textContent = 'Parar';
@@ -35,6 +39,14 @@ export function setTeste(element: HTMLDivElement): any {
                 const tempo = (fim - inicio) / 1000; // converte de milissegundos para segundos
                 const velocidade = (buffer.byteLength / tempo / 1000000) * 8; // calcula a velocidade em Mbps
                 setStatus(`Velocidade de download: ${velocidade.toFixed(2)} Mbps`);
+                amostras.push(+velocidade.toFixed(2));
+
+                if (amostras.length === TOTAL_AMOSTRAS) {
+                    const media = amostras.reduce((prev, curr) => prev + curr) / TOTAL_AMOSTRAS;
+                    setStatus(`Velocidade média de ${media.toFixed(2)} Mbps`);
+                    btn.textContent = 'Começar';
+                    return;
+                }
 
                 if (btn.textContent?.includes('Parar'))
                     setTimeout(() => {
