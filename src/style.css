@@ -22,9 +22,10 @@ body {
   min-height: 100vh;
 }
 
-h1 {
+h1.title {
   font-size: 3.2em;
   line-height: 1.1;
+  margin-bottom: 0px;
 }
 
 #app {
@@ -64,7 +65,8 @@ button:focus-visible {
 }
 
 h2.status {
-  min-height: 36px;
+  min-height: 60px;
+  font-size: 2.5em;
 }
 
 .barra-progresso-wrapper {
@@ -75,10 +77,12 @@ h2.status {
 }
 
 .barra-progresso {
+  --cor-barra: #646cff;
+
   width: 0%;
   height: 3px;
-  background-color: #646cff;
-  box-shadow: 0px 0px 8px #646cff;
+  background-color: var(--cor-barra);
+  box-shadow: 0px 0px 8px 1px var(--cor-barra);
   transition: width 700ms ease-in;
 }
 

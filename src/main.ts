@@ -3,7 +3,7 @@ import { setTeste } from './teste-velocidade'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
-    <h1>Teste de velocidade</h1>
+    <h1 class="title">Teste de velocidade</h1>
     <div class="card">
       <div id="teste-velocidade"></div>
     </div>
