@@ -21,7 +21,7 @@ export function setTeste(element: HTMLDivElement): any {
                 btn.textContent = 'Começar';
                 setTimeout(() => {
                     setStatus(getMedia());
-                }, 700);
+                }, 500);
             }
         });
         element.append(btn);
@@ -63,6 +63,8 @@ export function setTeste(element: HTMLDivElement): any {
             })
             .then(response => response.arrayBuffer())
             .then(buffer => {
+                if (btn.textContent?.includes('Começar')) return;
+
                 const fim = performance.now();
                 const tempo = (fim - inicio) / 1000; // converte de milissegundos para segundos
                 const velocidade = (buffer.byteLength / tempo / 1000000) * 8; // calcula a velocidade em Mbps
@@ -77,9 +79,8 @@ export function setTeste(element: HTMLDivElement): any {
                 }
 
                 setTimeout(() => {
-                    if (btn.textContent?.includes('Parar'))
-                        testarVelocidade();
-                }, 500);
+                    testarVelocidade();
+                }, 300);
             });
     }
 
