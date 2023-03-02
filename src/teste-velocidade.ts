@@ -10,7 +10,11 @@ export function setTeste(element: HTMLDivElement): any {
     const helper = {
         get emExecucao(): boolean {
             return btn.textContent!.includes('Parar');
-        }
+        },
+        get media(): string {
+            const media = amostras.reduce((prev, curr) => prev + curr) / amostras.length;
+            return media.toFixed(2) + ' Mbps';
+        },
     };
 
     function setBtnElement(): void {
@@ -26,7 +30,7 @@ export function setTeste(element: HTMLDivElement): any {
             } else {
                 btn.textContent = 'Começar';
                 setTimeout(() => {
-                    setStatus(getMedia());
+                    setStatus(helper.media);
                 }, 500);
             }
         });
@@ -79,7 +83,7 @@ export function setTeste(element: HTMLDivElement): any {
                 setProgresso(amostras.length / TOTAL_AMOSTRAS * 100);
 
                 if (amostras.length === TOTAL_AMOSTRAS) {
-                    setStatus(getMedia());
+                    setStatus(helper.media);
                     btn.textContent = 'Começar';
                     return;
                 }
@@ -92,11 +96,6 @@ export function setTeste(element: HTMLDivElement): any {
 
     function setStatus(status: string) {
         return element.querySelector('.status')!.textContent = status;
-    }
-
-    function getMedia(): string {
-        const media = amostras.reduce((prev, curr) => prev + curr) / amostras.length;
-        return media.toFixed(2) + ' Mbps';
     }
 
     setBtnElement();
