@@ -15,10 +15,13 @@ export function setTeste(element: HTMLDivElement): any {
                 amostras = [];
                 setProgresso(0);
                 setStatus('Carregando');
-                testarVelocidade()
+                testarVelocidade();
                 btn.textContent = 'Parar';
             } else {
                 btn.textContent = 'Começar';
+                setTimeout(() => {
+                    setStatus(getMedia());
+                }, 700);
             }
         });
         element.append(btn);
@@ -68,19 +71,25 @@ export function setTeste(element: HTMLDivElement): any {
                 setProgresso(amostras.length / TOTAL_AMOSTRAS * 100);
 
                 if (amostras.length === TOTAL_AMOSTRAS) {
+                    setStatus(getMedia());
                     btn.textContent = 'Começar';
                     return;
                 }
 
-                if (btn.textContent?.includes('Parar'))
-                    setTimeout(() => {
+                setTimeout(() => {
+                    if (btn.textContent?.includes('Parar'))
                         testarVelocidade();
-                    }, 500);
+                }, 500);
             });
     }
 
     function setStatus(status: string) {
         return element.querySelector('.status')!.textContent = status;
+    }
+
+    function getMedia(): string {
+        const media = amostras.reduce((prev, curr) => prev + curr) / amostras.length;
+        return media.toFixed(2) + ' Mbps';
     }
 
     setBtnElement();
