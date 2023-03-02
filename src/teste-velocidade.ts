@@ -55,11 +55,11 @@ export function setTeste(element: HTMLDivElement): any {
     }
 
     function testarVelocidade() {
-        const url = 'https://raw.githubusercontent.com/jrquick17/ng-speed-test/02c59e4afde67c35a5ba74014b91d44b33c0b3fe/demo/src/assets/5mb.jpg?nnn=0.6578724231971347';
+        const url = 'https://raw.githubusercontent.com/cgcdoss/teste-velocidade/master/public/5mb.jpg';
         const parametroParaEvitarCache = `timestamp=${new Date().getTime()}`;
         const inicio = performance.now();
 
-        fetch(`${url}?${parametroParaEvitarCache}`, { cache: 'no-store', })
+        fetch(`${url}?${parametroParaEvitarCache}`, { cache: 'no-store' })
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Erro ao tentar');
