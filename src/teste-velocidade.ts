@@ -7,11 +7,17 @@ export function setTeste(element: HTMLDivElement): any {
     let barraProgressoWrapper: HTMLDivElement;
     let barraProgresso: HTMLDivElement;
 
+    const helper = {
+        get emExecucao(): boolean {
+            return btn.textContent!.includes('Parar');
+        }
+    };
+
     function setBtnElement(): void {
         btn = document.createElement('button');
         btn.textContent = 'Começar';
         btn.addEventListener('click', () => {
-            if (btn.textContent?.includes('Começar')) {
+            if (!helper.emExecucao) {
                 amostras = [];
                 setProgresso(0);
                 setStatus('Carregando');
@@ -63,7 +69,7 @@ export function setTeste(element: HTMLDivElement): any {
             })
             .then(response => response.arrayBuffer())
             .then(buffer => {
-                if (btn.textContent?.includes('Começar')) return;
+                if (!helper.emExecucao) return;
 
                 const fim = performance.now();
                 const tempo = (fim - inicio) / 1000; // converte de milissegundos para segundos
@@ -96,6 +102,5 @@ export function setTeste(element: HTMLDivElement): any {
     setBtnElement();
     setStatusElement();
     setBarraProgressoElement();
-    // @ts-ignore
-    btn.click(); // Para iniciar o site já com o teste sendo executado
+    btn!.click(); // Para iniciar o site já com o teste sendo executado
 }
