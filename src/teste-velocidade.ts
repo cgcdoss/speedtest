@@ -91,6 +91,9 @@ export function setTeste(element: HTMLDivElement): any {
                 setTimeout(() => {
                     testarVelocidade();
                 }, 300);
+            }).catch(() => {
+                setStatus('Erro ao calcular');
+                btn.textContent = 'Começar';
             });
     }
 
