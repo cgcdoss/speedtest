@@ -94,34 +94,6 @@ h2.status {
   transition: width 700ms ease-in;
 }
 
-.grafico {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-end;
-  overflow-x: auto;
-  margin-top: 2rem;
-  max-width: calc(100vw - 4rem);
-}
-
-.grafico>div {
-  min-width: 2.5rem;
-  background-color: var(--cor-barra);
-  padding: 4px 4px 0;
-  font-size: 12px;
-}
-
-::-webkit-scrollbar {
-  height: 12px;
-}
-
-::-webkit-scrollbar-track {
-  background-color: #1a1a1a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

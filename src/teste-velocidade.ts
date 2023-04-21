@@ -1,4 +1,8 @@
+import { setGrafico } from "./grafico/grafico";
+
 export function setTeste(element: HTMLDivElement): any {
+    const grafico = setGrafico(element);
+
     let amostras: Array<number> = [];
     const TOTAL_AMOSTRAS = 15;
 
@@ -22,21 +26,28 @@ export function setTeste(element: HTMLDivElement): any {
         btn.textContent = 'Começar';
         btn.addEventListener('click', () => {
             if (!helper.emExecucao) {
-                amostras = [];
-                document.querySelector('.grafico')?.remove();
-                document.querySelector('.botao-grafico')?.remove();
-                setProgresso(0);
-                setStatus('Carregando');
-                testarVelocidade();
-                btn.textContent = 'Parar';
+                iniciar();
             } else {
-                btn.textContent = 'Começar';
-                setTimeout(() => {
-                    setStatus(helper.media);
-                }, 500);
+                parar();
             }
         });
         element.append(btn);
+    }
+
+    function iniciar() {
+        amostras = [];
+        grafico.removerBotaoEGrafico();
+        setProgresso(0);
+        setStatus('Carregando');
+        testarVelocidade();
+        btn.textContent = 'Parar';
+    }
+
+    function parar() {
+        btn.textContent = 'Começar';
+        setTimeout(() => {
+            setStatus(helper.media);
+        }, 500);
     }
 
     function setStatusElement(): void {
@@ -87,7 +98,7 @@ export function setTeste(element: HTMLDivElement): any {
                 if (amostras.length === TOTAL_AMOSTRAS) {
                     setStatus(helper.media);
                     btn.textContent = 'Começar';
-                    botaoExibirGrafico();
+                    grafico.botaoExibirGrafico(amostras);
                     return;
                 }
 
@@ -102,33 +113,6 @@ export function setTeste(element: HTMLDivElement): any {
 
     function setStatus(status: string) {
         return element.querySelector('.status')!.textContent = status;
-    }
-
-    function botaoExibirGrafico() {
-        const botao = document.createElement('button');
-        botao.classList.add('botao-grafico');
-        botao.addEventListener('click', () => {
-            montarGrafico();
-            botao.remove();
-        });
-        botao.textContent = 'Exibir Gráfico';
-        botao.style.marginTop = '2rem';
-
-        element.append(botao);
-    }
-
-    function montarGrafico() {
-        const grafico = document.createElement('div');
-        grafico.classList.add('grafico');
-
-        amostras.forEach(v => {
-            const div = document.createElement('div');
-            div.style.height = v + 'px';
-            div.textContent = v.toString();
-            grafico.append(div);
-        });
-
-        element.parentElement?.parentElement?.append(grafico);
     }
 
     setBtnElement();
