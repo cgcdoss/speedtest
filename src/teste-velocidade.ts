@@ -23,6 +23,8 @@ export function setTeste(element: HTMLDivElement): any {
         btn.addEventListener('click', () => {
             if (!helper.emExecucao) {
                 amostras = [];
+                document.querySelector('.grafico')?.remove();
+                document.querySelector('.botao-grafico')?.remove();
                 setProgresso(0);
                 setStatus('Carregando');
                 testarVelocidade();
@@ -85,6 +87,7 @@ export function setTeste(element: HTMLDivElement): any {
                 if (amostras.length === TOTAL_AMOSTRAS) {
                     setStatus(helper.media);
                     btn.textContent = 'Começar';
+                    botaoExibirGrafico();
                     return;
                 }
 
@@ -99,6 +102,33 @@ export function setTeste(element: HTMLDivElement): any {
 
     function setStatus(status: string) {
         return element.querySelector('.status')!.textContent = status;
+    }
+
+    function botaoExibirGrafico() {
+        const botao = document.createElement('button');
+        botao.classList.add('botao-grafico');
+        botao.addEventListener('click', () => {
+            montarGrafico();
+            botao.remove();
+        });
+        botao.textContent = 'Exibir Gráfico';
+        botao.style.marginTop = '2rem';
+
+        element.append(botao);
+    }
+
+    function montarGrafico() {
+        const grafico = document.createElement('div');
+        grafico.classList.add('grafico');
+
+        amostras.forEach(v => {
+            const div = document.createElement('div');
+            div.style.height = v + 'px';
+            div.textContent = v.toString();
+            grafico.append(div);
+        });
+
+        element.parentElement?.parentElement?.append(grafico);
     }
 
     setBtnElement();

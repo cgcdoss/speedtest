@@ -38,7 +38,13 @@ h1.title {
 }
 
 .card {
+  display: flex;
+  justify-content: center;
   padding: 2em;
+}
+
+#teste-velocidade {
+  min-width: 25vw;
 }
 
 .read-the-docs {
@@ -86,6 +92,22 @@ h2.status {
   background-color: var(--cor-barra);
   box-shadow: 0px 0px 8px var(--cor-barra);
   transition: width 700ms ease-in;
+}
+
+.grafico {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  overflow-x: auto;
+  margin-top: 2rem;
+  max-width: calc(100vw - 4rem);
+}
+
+.grafico>div {
+  min-width: 2rem;
+  background-color: var(--cor-barra);
+  padding: 4px 4px 0;
+  font-size: 12px;
 }
 
 @media (prefers-color-scheme: light) {
