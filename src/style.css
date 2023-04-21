@@ -111,7 +111,7 @@ h2.status {
 }
 
 ::-webkit-scrollbar {
-  height: 20px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
@@ -119,7 +119,7 @@ h2.status {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #000;
+  background: #888;
 }
 
 @media (prefers-color-scheme: light) {
