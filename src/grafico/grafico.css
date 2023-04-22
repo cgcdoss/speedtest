@@ -21,6 +21,7 @@
 }
 
 .grafico>div {
+    color: #fff;
     min-width: 2.5rem;
     background-color: var(--cor-barra);
     font-size: 12px;
@@ -29,4 +30,10 @@
 
 .grafico>div:hover {
     filter: brightness(1.2);
+}
+
+@media (prefers-color-scheme: light) {
+    ::-webkit-scrollbar-track {
+        background-color: #ccc;
+    }
 }
