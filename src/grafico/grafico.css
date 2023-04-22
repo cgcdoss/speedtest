@@ -1,3 +1,15 @@
+::-webkit-scrollbar {
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
 .grafico {
     display: flex;
     gap: 1rem;
@@ -9,20 +21,16 @@
 }
 
 .grafico>div {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
     min-width: 2.5rem;
     background-color: var(--cor-barra);
-    padding: 4px 4px 0;
     font-size: 12px;
+    box-shadow: inset 2px 2px 10px #0000008f;
+    transition: box-shadow 150ms;
 }
 
-::-webkit-scrollbar {
-    height: 12px;
-}
-
-::-webkit-scrollbar-track {
-    background-color: #1a1a1a;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #888;
+.grafico>div:hover {
+    box-shadow: none;
 }
