@@ -4,12 +4,12 @@ export function setGrafico(element: HTMLDivElement) {
     function botaoExibirGrafico(amostras: Array<number>) {
         const botao = document.createElement('button');
         botao.classList.add('botao-grafico');
+        botao.style.marginTop = '2rem';
+        botao.textContent = 'Exibir Gráfico';
         botao.addEventListener('click', () => {
             montarGrafico(amostras);
             botao.remove();
         });
-        botao.textContent = 'Exibir Gráfico';
-        botao.style.marginTop = '2rem';
 
         element.append(botao);
     }
@@ -18,13 +18,14 @@ export function setGrafico(element: HTMLDivElement) {
         const grafico = document.createElement('div');
         grafico.classList.add('grafico');
 
-        amostras.forEach(v => {
+        const divs = amostras.map(a => {
             const div = document.createElement('div');
-            div.style.height = obterAlturaBarra(amostras, v) + 'px';
-            div.textContent = v.toString();
-            grafico.append(div);
+            div.style.height = obterAlturaBarra(amostras, a) + 'px';
+            div.textContent = a.toString();
+            return div;
         });
 
+        grafico.append(...divs);
         element.parentElement?.parentElement?.append(grafico);
     }
 
