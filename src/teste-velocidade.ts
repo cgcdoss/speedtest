@@ -5,37 +5,39 @@ export class TesteVelocidade {
     private _grafico: Grafico;
     private _amostras: Array<number> = [];
     private readonly TOTAL_AMOSTRAS = 15;
-    private _btn!: HTMLButtonElement;
-    private _status!: HTMLHeadingElement;
+    private _btn = this._getBtn;
+    private _status = this._getStatus;
     private _barraProgressoWrapper!: HTMLDivElement;
     private _barraProgresso!: HTMLDivElement;
 
     constructor(private _element: HTMLDivElement) {
         this._grafico = new Grafico(this._element);
 
-        this._setBtnElement();
-        this._setStatusElement();
+        this._element.append(this._btn);
+        this._element.append(this._status);
         this._setBarraProgressoElement();
         this._btn.click(); // Para iniciar o site já com o teste sendo executado
     }
 
-    private _setBtnElement(): void {
-        this._btn = document.createElement('button');
-        this._btn.textContent = 'Começar';
-        this._btn.addEventListener('click', () => {
-            if (!this._emExecucao) {
-                this._iniciar();
-            } else {
+    private get _getBtn() {
+        const btn = document.createElement('button');
+        btn.textContent = 'Começar';
+        btn.addEventListener('click', () => {
+            if (this._emExecucao) {
                 this._parar();
+            } else {
+                this._iniciar();
             }
         });
-        this._element.append(this._btn);
+
+        return btn;
     }
 
-    private _setStatusElement(): void {
-        this._status = document.createElement('h2');
-        this._status.classList.add('status');
-        this._element.append(this._status);
+    private get _getStatus() {
+        const status = document.createElement('h2');
+        status.classList.add('status');
+
+        return status;
     }
 
     private _setBarraProgressoElement(): void {
