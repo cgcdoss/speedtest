@@ -1,5 +1,5 @@
 import './style.css'
-import { setTeste } from './teste-velocidade'
+import { TesteVelocidade } from './teste-velocidade'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
@@ -13,4 +13,4 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </div>
 `
 
-setTeste(document.querySelector('#teste-velocidade')!);
+new TesteVelocidade(document.querySelector('#teste-velocidade')!);

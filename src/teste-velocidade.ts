@@ -1,77 +1,79 @@
 import { Grafico } from "./grafico/grafico";
 
-export function setTeste(element: HTMLDivElement): any {
-    const grafico = new Grafico(element);
+export class TesteVelocidade {
 
-    let amostras: Array<number> = [];
-    const TOTAL_AMOSTRAS = 15;
+    private _grafico: Grafico;
+    private _amostras: Array<number> = [];
+    private readonly TOTAL_AMOSTRAS = 15;
+    private _btn!: HTMLButtonElement;
+    private _status!: HTMLHeadingElement;
+    private _barraProgressoWrapper!: HTMLDivElement;
+    private _barraProgresso!: HTMLDivElement;
 
-    let btn: HTMLButtonElement;
-    let status: HTMLHeadingElement;
-    let barraProgressoWrapper: HTMLDivElement;
-    let barraProgresso: HTMLDivElement;
+    constructor(private _element: HTMLDivElement) {
+        this._grafico = new Grafico(this._element);
 
-    const helper = {
-        get emExecucao(): boolean {
-            return btn.textContent!.includes('Parar');
-        },
-        get media(): string {
-            const media = amostras.reduce((prev, curr) => prev + curr) / amostras.length;
-            return media.toFixed(2) + ' Mbps';
-        },
-    };
+        this._setBtnElement();
+        this._setStatusElement();
+        this._setBarraProgressoElement();
+        this._btn.click(); // Para iniciar o site já com o teste sendo executado
+    }
 
-    function setBtnElement(): void {
-        btn = document.createElement('button');
-        btn.textContent = 'Começar';
-        btn.addEventListener('click', () => {
-            if (!helper.emExecucao) {
-                iniciar();
+    private _setBtnElement(): void {
+        this._btn = document.createElement('button');
+        this._btn.textContent = 'Começar';
+        this._btn.addEventListener('click', () => {
+            if (!this._emExecucao) {
+                this._iniciar();
             } else {
-                parar();
+                this._parar();
             }
         });
-        element.append(btn);
+        this._element.append(this._btn);
     }
 
-    function iniciar() {
-        amostras = [];
-        grafico.removerBotaoEGrafico();
-        setProgresso(0);
-        setStatus('Carregando');
-        testarVelocidade();
-        btn.textContent = 'Parar';
+    private _setStatusElement(): void {
+        this._status = document.createElement('h2');
+        this._status.classList.add('status');
+        this._element.append(this._status);
     }
 
-    function parar() {
-        btn.textContent = 'Começar';
+    private _setBarraProgressoElement(): void {
+        this._barraProgressoWrapper = document.createElement('div');
+        this._barraProgresso = document.createElement('div');
+
+        this._barraProgressoWrapper.classList.add('barra-progresso-wrapper');
+        this._barraProgresso.classList.add('barra-progresso');
+
+        this._barraProgressoWrapper.append(this._barraProgresso);
+        this._element.append(this._barraProgressoWrapper);
+    }
+
+    private _setStatus(status: string) {
+        return this._element.querySelector('.status')!.textContent = status;
+    }
+
+    private _setProgresso(progresso: number): void {
+        this._barraProgresso.style.width = `${progresso}%`;
+    }
+
+    private _iniciar() {
+        this._amostras = [];
+        this._grafico.removerBotaoEGrafico();
+        this._setProgresso(0);
+        this._setStatus('Carregando');
+        this._testarVelocidade();
+        this._btn.textContent = 'Parar';
+    }
+
+    private _parar() {
+        this._btn.textContent = 'Começar';
         setTimeout(() => {
-            setStatus(helper.media);
+            this._setStatus(this._getMedia);
         }, 500);
     }
 
-    function setStatusElement(): void {
-        status = document.createElement('h2');
-        status.classList.add('status');
-        element.append(status);
-    }
-
-    function setBarraProgressoElement(): void {
-        barraProgressoWrapper = document.createElement('div');
-        barraProgresso = document.createElement('div');
-
-        barraProgressoWrapper.classList.add('barra-progresso-wrapper');
-        barraProgresso.classList.add('barra-progresso');
-
-        barraProgressoWrapper.append(barraProgresso);
-        element.append(barraProgressoWrapper);
-    }
-
-    function setProgresso(progresso: number): void {
-        barraProgresso.style.width = `${progresso}%`;
-    }
-
-    function testarVelocidade() {
+    private _testarVelocidade() {
         const url = 'https://raw.githubusercontent.com/cgcdoss/teste-velocidade/master/public/5mb.jpg';
         const parametroParaEvitarCache = `timestamp=${new Date().getTime()}`;
         const inicio = performance.now();
@@ -86,37 +88,38 @@ export function setTeste(element: HTMLDivElement): any {
             })
             .then(response => response.arrayBuffer())
             .then(buffer => {
-                if (!helper.emExecucao) return;
+                if (!this._emExecucao) return;
 
                 const fim = performance.now();
                 const tempo = (fim - inicio) / 1000; // converte de milissegundos para segundos
                 const velocidade = (buffer.byteLength / tempo / 1000000) * 8; // calcula a velocidade em Mbps
-                setStatus(`${velocidade.toFixed(2)} Mbps`);
-                amostras.push(+velocidade.toFixed(2));
-                setProgresso(amostras.length / TOTAL_AMOSTRAS * 100);
+                this._setStatus(`${velocidade.toFixed(2)} Mbps`);
+                this._amostras.push(+velocidade.toFixed(2));
+                this._setProgresso(this._amostras.length / this.TOTAL_AMOSTRAS * 100);
 
-                if (amostras.length === TOTAL_AMOSTRAS) {
-                    setStatus(helper.media);
-                    btn.textContent = 'Começar';
-                    grafico.botaoExibirGrafico(amostras);
+                if (this._amostras.length === this.TOTAL_AMOSTRAS) {
+                    this._setStatus(this._getMedia);
+                    this._btn.textContent = 'Começar';
+                    this._grafico.botaoExibirGrafico(this._amostras);
                     return;
                 }
 
                 setTimeout(() => {
-                    testarVelocidade();
+                    this._testarVelocidade();
                 }, 300);
             }).catch(() => {
-                setStatus('Erro ao calcular');
-                btn.textContent = 'Começar';
+                this._setStatus('Erro ao calcular');
+                this._btn.textContent = 'Começar';
             });
     }
 
-    function setStatus(status: string) {
-        return element.querySelector('.status')!.textContent = status;
+    private get _emExecucao() {
+        return this._btn.textContent!.includes('Parar');
     }
 
-    setBtnElement();
-    setStatusElement();
-    setBarraProgressoElement();
-    btn!.click(); // Para iniciar o site já com o teste sendo executado
+    private get _getMedia() {
+        const media = this._amostras.reduce((prev, curr) => prev + curr) / this._amostras.length;
+        return media.toFixed(2) + ' Mbps';
+    }
+
 }
