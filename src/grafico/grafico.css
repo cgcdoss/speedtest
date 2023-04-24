@@ -17,20 +17,33 @@
     align-items: flex-end;
     overflow-x: auto;
     overflow-y: hidden;
-    margin-top: 2rem;
+    margin-top: 1rem;
     max-width: calc(100vw - 4rem);
 }
 
 .grafico>div {
+    position: relative;
     color: #fff;
     min-width: 2.5rem;
     background-color: var(--cor-barra);
     font-size: 12px;
     transition: filter 150ms;
+    margin-top: 18px;
 }
 
 .grafico>div:hover {
     filter: brightness(1.2);
+}
+
+p {
+    margin: 0;
+}
+
+.grafico>div>p {
+    position: absolute;
+    top: -20px;
+    transform: translateX(-50%);
+    left: 50%;
 }
 
 @media (prefers-color-scheme: light) {

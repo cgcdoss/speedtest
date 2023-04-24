@@ -21,10 +21,14 @@ export class Grafico {
         const grafico = document.createElement('div');
         grafico.classList.add('grafico');
 
-        const divs = amostras.map(a => {
+        const divs = amostras.map(altura => {
             const div = document.createElement('div');
-            div.style.height = this._obterAlturaBarra(amostras, a) + 'px';
-            div.textContent = a.toString();
+            div.style.height = this._obterAlturaBarra(amostras, altura) + 'px';
+
+            const paragrafo = document.createElement('p');
+            paragrafo.textContent = altura.toString();
+
+            div.append(paragrafo);
             return div;
         });
 
