@@ -5,21 +5,19 @@ export class TesteVelocidade {
     private _grafico: Grafico;
     private _amostras: Array<number> = [];
     private readonly TOTAL_AMOSTRAS = 15;
-    private _btn = this._getBtn;
-    private _status = this._getStatus;
-    private _barraProgressoWrapper!: HTMLDivElement;
-    private _barraProgresso!: HTMLDivElement;
 
     constructor(private _element: HTMLDivElement) {
         this._grafico = new Grafico(this._element);
 
-        this._element.append(this._btn, this._status);
+        this._setBtnElement();
+        this._setStatusElement();
         this._setBarraProgressoElement();
         this._btn.click(); // Para iniciar o site já com o teste sendo executado
     }
 
-    private get _getBtn() {
+    private _setBtnElement() {
         const btn = document.createElement('button');
+        btn.id = 'btn-toggle';
         btn.textContent = 'Começar';
         btn.addEventListener('click', () => {
             if (this._emExecucao) {
@@ -28,30 +26,28 @@ export class TesteVelocidade {
                 this._iniciar();
             }
         });
-
-        return btn;
+        this._element.append(btn);
     }
 
-    private get _getStatus() {
+    private _setStatusElement() {
         const status = document.createElement('h2');
         status.classList.add('status');
-
-        return status;
+        this._element.append(status);
     }
 
     private _setBarraProgressoElement(): void {
-        this._barraProgressoWrapper = document.createElement('div');
-        this._barraProgresso = document.createElement('div');
+        const barraProgressoWrapper = document.createElement('div');
+        const barraProgresso = document.createElement('div');
 
-        this._barraProgressoWrapper.classList.add('barra-progresso-wrapper');
-        this._barraProgresso.classList.add('barra-progresso');
+        barraProgressoWrapper.classList.add('barra-progresso-wrapper');
+        barraProgresso.classList.add('barra-progresso');
 
-        this._barraProgressoWrapper.append(this._barraProgresso);
-        this._element.append(this._barraProgressoWrapper);
+        barraProgressoWrapper.append(barraProgresso);
+        this._element.append(barraProgressoWrapper);
     }
 
-    private _setStatus(status: string) {
-        return this._element.querySelector('.status')!.textContent = status;
+    private _setStatusText(status: string) {
+        return this._status.textContent = status;
     }
 
     private _setProgresso(progresso: number): void {
@@ -62,7 +58,7 @@ export class TesteVelocidade {
         this._amostras = [];
         this._grafico.removerBotaoEGrafico();
         this._setProgresso(0);
-        this._setStatus('Carregando');
+        this._setStatusText('Carregando');
         this._testarVelocidade();
         this._btn.textContent = 'Parar';
     }
@@ -70,7 +66,7 @@ export class TesteVelocidade {
     private _parar() {
         this._btn.textContent = 'Começar';
         setTimeout(() => {
-            this._setStatus(this._getMedia);
+            this._setStatusText(this._getMedia);
         }, 500);
     }
 
@@ -94,12 +90,12 @@ export class TesteVelocidade {
                 const fim = performance.now();
                 const tempo = (fim - inicio) / 1000; // converte de milissegundos para segundos
                 const velocidade = (buffer.byteLength / tempo / 1000000) * 8; // calcula a velocidade em Mbps
-                this._setStatus(`${velocidade.toFixed(2)} Mbps`);
+                this._setStatusText(`${velocidade.toFixed(2)} Mbps`);
                 this._amostras.push(+velocidade.toFixed(2));
                 this._setProgresso(this._amostras.length / this.TOTAL_AMOSTRAS * 100);
 
                 if (this._amostras.length === this.TOTAL_AMOSTRAS) {
-                    this._setStatus(this._getMedia);
+                    this._setStatusText(this._getMedia);
                     this._btn.textContent = 'Começar';
                     this._grafico.botaoExibirGrafico(this._amostras);
                     return;
@@ -109,7 +105,7 @@ export class TesteVelocidade {
                     this._testarVelocidade();
                 }, 300);
             }).catch(() => {
-                this._setStatus('Erro ao calcular');
+                this._setStatusText('Erro ao calcular');
                 this._btn.textContent = 'Começar';
             });
     }
@@ -121,6 +117,18 @@ export class TesteVelocidade {
     private get _getMedia() {
         const media = this._amostras.reduce((prev, curr) => prev + curr) / this._amostras.length;
         return media.toFixed(2) + ' Mbps';
+    }
+
+    private get _btn(): HTMLButtonElement {
+        return document.querySelector('#btn-toggle')!;
+    }
+
+    private get _status(): HTMLHeadingElement {
+        return document.querySelector('.status')!;
+    }
+
+    private get _barraProgresso(): HTMLDivElement {
+        return document.querySelector('.barra-progresso')!;
     }
 
 }
