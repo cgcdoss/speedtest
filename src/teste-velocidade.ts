@@ -9,13 +9,17 @@ export class TesteVelocidade {
     constructor(private _element: HTMLDivElement) {
         this._grafico = new Grafico(this._element);
 
-        this._setBtnElement();
-        this._setStatusElement();
-        this._setBarraProgressoElement();
+        this._setupElements();
         this._btn.click(); // Para iniciar o site já com o teste sendo executado
     }
 
-    private _setBtnElement() {
+    private _setupElements(): void {
+        this._setBtnElement();
+        this._setStatusElement();
+        this._setBarraProgressoElement();
+    }
+
+    private _setBtnElement(): void {
         const btn = document.createElement('button');
         btn.id = 'btn-toggle';
         btn.textContent = 'Começar';
@@ -29,7 +33,7 @@ export class TesteVelocidade {
         this._element.append(btn);
     }
 
-    private _setStatusElement() {
+    private _setStatusElement(): void {
         const status = document.createElement('h2');
         status.classList.add('status');
         this._element.append(status);
@@ -54,7 +58,7 @@ export class TesteVelocidade {
         this._barraProgresso.style.width = `${progresso}%`;
     }
 
-    private _iniciar() {
+    private _iniciar(): void {
         this._amostras = [];
         this._grafico.removerBotaoEGrafico();
         this._setProgresso(0);
