@@ -13,8 +13,7 @@ export class TesteVelocidade {
     constructor(private _element: HTMLDivElement) {
         this._grafico = new Grafico(this._element);
 
-        this._element.append(this._btn);
-        this._element.append(this._status);
+        this._element.append(this._btn, this._status);
         this._setBarraProgressoElement();
         this._btn.click(); // Para iniciar o site já com o teste sendo executado
     }
