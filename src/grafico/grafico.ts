@@ -1,35 +1,38 @@
 import './grafico.css';
 
-export function setGrafico(element: HTMLDivElement) {
-    function botaoExibirGrafico(amostras: Array<number>) {
+export class Grafico {
+
+    constructor(private _element: HTMLDivElement) { }
+
+    public botaoExibirGrafico(amostras: Array<number>) {
         const botao = document.createElement('button');
         botao.classList.add('botao-grafico');
         botao.style.marginTop = '2rem';
         botao.textContent = 'Exibir Gráfico';
         botao.addEventListener('click', () => {
-            montarGrafico(amostras);
+            this._montarGrafico(amostras);
             botao.remove();
         });
 
-        element.append(botao);
+        this._element.append(botao);
     }
 
-    function montarGrafico(amostras: Array<number>) {
+    private _montarGrafico(amostras: Array<number>) {
         const grafico = document.createElement('div');
         grafico.classList.add('grafico');
 
         const divs = amostras.map(a => {
             const div = document.createElement('div');
-            div.style.height = obterAlturaBarra(amostras, a) + 'px';
+            div.style.height = this._obterAlturaBarra(amostras, a) + 'px';
             div.textContent = a.toString();
             return div;
         });
 
         grafico.append(...divs);
-        element.parentElement?.parentElement?.append(grafico);
+        this._element.parentElement?.parentElement?.append(grafico);
     }
 
-    function removerBotaoEGrafico() {
+    public removerBotaoEGrafico() {
         document.querySelector('.grafico')?.remove();
         document.querySelector('.botao-grafico')?.remove();
     }
@@ -40,7 +43,7 @@ export function setGrafico(element: HTMLDivElement) {
      * @param altura 
      * @returns 
      */
-    function obterAlturaBarra(amostras: number[], altura: number): number {
+    private _obterAlturaBarra(amostras: number[], altura: number): number {
         if (amostras.some(a => a > 250)) {
             return altura / 2;
         }
@@ -52,8 +55,4 @@ export function setGrafico(element: HTMLDivElement) {
         return altura;
     }
 
-    return {
-        botaoExibirGrafico,
-        removerBotaoEGrafico,
-    };
 }

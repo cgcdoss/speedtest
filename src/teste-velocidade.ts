@@ -1,7 +1,7 @@
-import { setGrafico } from "./grafico/grafico";
+import { Grafico } from "./grafico/grafico";
 
 export function setTeste(element: HTMLDivElement): any {
-    const grafico = setGrafico(element);
+    const grafico = new Grafico(element);
 
     let amostras: Array<number> = [];
     const TOTAL_AMOSTRAS = 15;
