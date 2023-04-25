@@ -93,7 +93,8 @@ export class TesteVelocidade {
 
                 const fim = performance.now();
                 const tempo = (fim - inicio) / 1000; // converte de milissegundos para segundos
-                const velocidade = (buffer.byteLength / tempo / 1000000) * 8; // calcula a velocidade em Mbps
+                const umMega = 1000000;
+                const velocidade = (buffer.byteLength / tempo / umMega) * 8; // calcula a velocidade em Mbps
                 this._setStatusText(`${velocidade.toFixed(2)} Mbps`);
                 this._amostras.push(+velocidade.toFixed(2));
                 this._setProgresso(this._amostras.length / this.TOTAL_AMOSTRAS * 100);
